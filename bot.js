@@ -6,6 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // PancakeSwap router.
+const Interface = require('ethers').Interface;
 const pancakeRouterABI = require("./ABIs/pancakeRouterABI.json");
 const erc20ABI = require("./ABIs/erc20ABI.json");
 const pancakeSwapRouterV2Address = "0x10ED43C718714eb63d5aA57B78B54704E256024E";
@@ -142,7 +143,7 @@ async function sell(ourWallet, tokenAddress, gasLimit, gasPrice) {
 
     // Execute the transaction once the token management is approved.
     const swap_txn =
-      await contract.swapExactTokensForETHSupportingFeeOnTransferTokens('''
+      await contract.swapExactTokensForETHSupportingFeeOnTransferTokens(
         sellAmount,
         amountOutMin,
         [tokenAddress, BNBaddress],
@@ -152,7 +153,7 @@ async function sell(ourWallet, tokenAddress, gasLimit, gasPrice) {
           'gasLimit': ethers.parseUnits(gasLimit.toString(), "gwei"),
           'gasPrice': ethers.parseUnits(gasPrice.toString(), "gwei"),
         }
-      ''');
+      );
 
     const receipt = await swap_txn.wait();
 

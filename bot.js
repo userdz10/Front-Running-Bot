@@ -142,7 +142,7 @@ async function sell(ourWallet, tokenAddress, gasLimit, gasPrice) {
 
     // Execute the transaction once the token management is approved.
     const swap_txn =
-      await contract.swapExactTokensForETHSupportingFeeOnTransferTokens(
+      await contract.swapExactTokensForETHSupportingFeeOnTransferTokens('''
         sellAmount,
         amountOutMin,
         [tokenAddress, BNBaddress],
@@ -152,7 +152,7 @@ async function sell(ourWallet, tokenAddress, gasLimit, gasPrice) {
           'gasLimit': ethers.parseUnits(gasLimit.toString(), "gwei"),
           'gasPrice': ethers.parseUnits(gasPrice.toString(), "gwei"),
         }
-      );
+      ''');
 
     const receipt = await swap_txn.wait();
 
